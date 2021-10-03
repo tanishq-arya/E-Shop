@@ -8,6 +8,7 @@ import useStyles from './styles';
 const Cart = ( { cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCart } ) => {
     // const isEmpty = !cart.line_items.length;
     const classes = useStyles();
+    // console.log(cart);
 
     const EmptyCart = () => (
         <Typography variant="subtitle1"> You have no items in your shopping cart,
@@ -27,7 +28,7 @@ const Cart = ( { cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCar
             </Grid>
             <div className={classes.cardDetails}>
                 <Typography variant = "h4">
-                    Subtotal = {cart.subtotal.formatte_with_symbol}
+                    Subtotal = {cart.subtotal.formatted_with_symbol}
                 </Typography>
                 
                 <div>
