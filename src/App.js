@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Products from './Components/Products/Products';
 import Navbar from './Components/Navbar/Navbar';
 import Cart from './Components/Cart/Cart';
+import Checkout from './Components/CheckoutForm/Checkout/Checkout';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { commerce } from './library/commerce'
@@ -83,6 +85,9 @@ const App = () => {
                 />
               </Route>
               
+              <Route exact path = "/checkout">
+                <Checkout cart = {cart} />
+              </Route>
             </Switch>
         </div>
       </Router>
