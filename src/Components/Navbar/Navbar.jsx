@@ -9,8 +9,8 @@ import logo from '../../assets/shop.jpg'
 
 //nav bar on the top of the website
 const Navbar = ({totalItems}) => {
-    const classes = useStyles();
-    const location = useLocation();
+const classes = useStyles();
+const location = useLocation();
 
     return (
         <>
