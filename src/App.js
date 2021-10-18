@@ -74,7 +74,7 @@ const App = () => {
   console.log(cart);
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh"}}>
+    <>
       <Router>
         <Navbar totalItems = {cart.total_items} />
         
@@ -92,16 +92,18 @@ const App = () => {
               handleEmptyCart = { handleEmptyCart }
             />
           </Route>
+          <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh"}}>
           <div className="w-100" style={{position: "realtive", maxWidth:"400px"}}>  
             <PrivateRoute path="/update-profile" component={UpdateProfile} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
             <Route path="/forgot-password" component={ForgotPassword} />
           </div>
+          </Container>
         </Switch>
         </AuthProvider>
       </Router>
-    </Container>
+    </>
   )
 }
 

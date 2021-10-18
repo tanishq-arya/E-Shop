@@ -32,7 +32,7 @@ export default function ForgotPassword(){
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Password Reset</h2>
+          <h2 className="text-center mb-4" style={{fontFamily:"Roboto"}}>Password Reset</h2>
           {/* {console.log("Logged in") && currentUser.email} */}
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}

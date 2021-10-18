@@ -3,6 +3,7 @@ import {useRef, useState} from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import { TextField } from '@material-ui/core';
 
 export default function Signup(){
   
@@ -17,7 +18,7 @@ export default function Signup(){
   // console.log("working");
   async function handleSubmit(e) {
     e.preventDefault();
-
+    // console.log("clicked");
     if(passwordRef.current.value !== passwordConfirmRef.current.value)
     {
       return setError("Passwords don't match");
@@ -29,8 +30,6 @@ export default function Signup(){
       await signup(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch {
-      // console.log(emailRef.current.value)
-      // console.log(passwordRef.current.value);
       setError('Failed to create an account');
     }
     setLoading(false);
@@ -39,12 +38,12 @@ export default function Signup(){
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+          <h2 className="text-center mb-4" style={{fontFamily:"Roboto"}}>Sign Up</h2>
           {/* {JSON.stringify(currentUser)} */}
           {/* {currentUser.email} */}
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
+            {/* <Form.Group id="email">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
             </Form.Group>
@@ -58,8 +57,47 @@ export default function Signup(){
               <Form.Label>Password Confirmation</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required />
             </Form.Group>
-
-            <Button disabled={loading} className="w-100 mt-4" type="submit">Sign Up</Button>
+             */}
+            <TextField
+              label="Email" 
+              variant="standard"
+              fullWidth
+              required
+              type="email"
+              ref={emailRef}
+              id="email"
+              style={{ margin:"1em 0em", fontFamily:"Open-sans" }}
+            />
+            <TextField
+              label="Password" 
+              variant="standard"
+              fullWidth
+              required
+              type="password"
+              ref={passwordRef}
+              id="password"
+              style={{ margin:"1em 0em" }}
+            />
+            <TextField
+              label="Password Confirmation" 
+              variant="standard"
+              fullWidth
+              required
+              type="password"
+              ref={passwordConfirmRef}
+              id="password-confirm"
+              style={{ margin:"1em 0em" }}
+            />
+            <Button 
+              // variant="contained" 
+              // color="primary" 
+              disabled={ loading } 
+              className="w-100 mt-4" 
+              type="submit" 
+              // endIcon={<KeyboardArrowRight/>}
+            >
+              Sign Up
+            </Button>
           </Form>
         </Card.Body>
       </Card>
