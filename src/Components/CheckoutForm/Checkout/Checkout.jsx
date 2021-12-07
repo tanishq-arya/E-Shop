@@ -8,10 +8,15 @@ import { commerce } from '../../../library/commerce'
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState(null);
     const classes = useStyles();
+    const [shippingData, setShippingData] = useState({});
+
+    
+    const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     useEffect(() =>{
         if (cart.id) {
@@ -29,6 +34,12 @@ const Checkout = ({ cart }) => {
         }
     },[cart]);
 
+    const next = (data) => {
+        setShippingData(data);
+    
+        nextStep();
+    };
+
     const Confirmation = () => {
         <div>
             Confirmation
@@ -36,8 +47,8 @@ const Checkout = ({ cart }) => {
     }
 
     const Form = () => (activeStep === 0
-        ? <AddressForm checkoutToken={checkoutToken}/>// nextStep={nextStep} setShippingData={setShippingData} test={test} />
-        : <PaymentForm/>);// checkoutToken={checkoutToken} nextStep={nextStep} backStep={backStep} shippingData={shippingData} onCaptureCheckout={onCaptureCheckout} />);
+        ? <AddressForm checkoutToken={checkoutToken} next = { next }/> // nextStep={nextStep} setShippingData={setShippingData} test={test} />
+        : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} nextStep={nextStep} backStep={backStep} onCaptureCheckout={onCaptureCheckout}/>);// checkoutToken={checkoutToken}  backStep={backStep} shippingData={shippingData} onCaptureCheckout={onCaptureCheckout} />);
        
         // Render JSX => useEffect 
     return (
