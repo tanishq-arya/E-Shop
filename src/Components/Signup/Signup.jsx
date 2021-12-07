@@ -43,7 +43,7 @@ export default function Signup(){
           {/* {currentUser.email} */}
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            {/* <Form.Group id="email">
+            <Form.Group id="email">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
             </Form.Group>
@@ -57,8 +57,8 @@ export default function Signup(){
               <Form.Label>Password Confirmation</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required />
             </Form.Group>
-             */}
-            <TextField
+            
+            {/* <TextField
               label="Email" 
               variant="standard"
               fullWidth
@@ -87,7 +87,7 @@ export default function Signup(){
               ref={passwordConfirmRef}
               id="password-confirm"
               style={{ margin:"1em 0em" }}
-            />
+            /> */}
             <Button 
               // variant="contained" 
               // color="primary" 
