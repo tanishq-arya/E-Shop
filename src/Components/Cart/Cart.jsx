@@ -21,7 +21,7 @@ const Cart = ( { cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCar
             <Grid container spacing={3}>
                 {cart.line_items.map((item) => (
                     <Grid item xs={12} sm={4} key={item.id} >
-                        <CartItem item = { item } onUpdateCartQty = { handleUpdateCartQty } onRemoveFromCart = { handleRemoveFromCart } />
+                        <CartItem item = { item } handleUpdateCartQty = { handleUpdateCartQty } handleRemoveFromCart = { handleRemoveFromCart } />
                         {/* <div>{item.name}</div> */}
                     </Grid>
                 ))}
@@ -51,4 +51,4 @@ const Cart = ( { cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCar
     )
 }
 
-export default Cart
+export default Cart;

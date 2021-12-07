@@ -106,6 +106,6 @@ const AddressForm = ({ checkoutToken, next }) => {
             </FormProvider>
         </>
     );
-}
+};
 
-export default AddressForm
+export default AddressForm;

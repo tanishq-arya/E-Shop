@@ -6,11 +6,11 @@ import Review from './Review';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout} ) => {
+const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout, timeout} ) => {
     const handleSubmit = async (event, elements, stripe) => {
         event.preventDefault();
 
-        if(!stripe || !elements) return null;
+        if(!stripe || !elements) return;
 
         const cardElement = elements.getElement(CardElement);
 
@@ -43,6 +43,8 @@ const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptur
             };
         
             onCaptureCheckout(checkoutToken.id, orderData);
+
+            timeout();
         
             nextStep();
         }
@@ -71,7 +73,7 @@ const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptur
              </Elements>
         </>
     );
-}
+};
 
 export default PaymentForm;
 
