@@ -16,6 +16,7 @@ import Signup from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
 import UpdateProfile from './Components/UpdateProfile/UpdateProfile';
+import PastOrders from './Components/PastOrders/PastOrders';
 import { PrivateRoute } from './Components/UpdateProfile/PrivateRoute';
 
 import {Container} from "react-bootstrap";
@@ -100,12 +101,13 @@ const App = () => {
               <Route exact path="/cart">
                 <Cart cart={cart} handleUpdateCartQty={handleUpdateCartQty} handleRemoveFromCart={handleRemoveFromCart} onEmptyCart={handleEmptyCart} />
               </Route>
-              <Route path="/checkout" exact>
+              <Route exact path="/checkout">
                 <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
               </Route>
               <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh"}}>
               <div className="w-100" style={{position: "realtive", maxWidth:"400px"}}>  
                 <PrivateRoute path="/update-profile" component={UpdateProfile} />
+                <PrivateRoute path="/past-orders" component={PastOrders} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
                 <Route path="/forgot-password" component={ForgotPassword} />

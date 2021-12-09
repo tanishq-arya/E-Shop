@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, AccountCircle } from '@material-ui/icons';
 import useStyles from './styles';
 // import Button from '@mui/material/Button';
-import logo from '../../assets/shop.jpg'
+// import logo from '../../assets/shop.jpg'
 
 //nav bar on the top of the website
 const Navbar = ({totalItems}) => {

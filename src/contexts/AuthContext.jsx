@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useContext, useEffect } from 'react';
 import { auth } from "../library/firebase";
-
+import app from '../library/firebase';
 const AuthContext = React.createContext();
 
 export function useAuth()
@@ -39,6 +39,30 @@ export default function AuthProvider({ children }){
     return auth.currentUser.updatePassword(password);
   }
 
+  function getUserID() {
+    return auth.currentUser.uid;
+  }
+
+  function getPastOrders(){
+    const db = app.firestore();
+    const uid = getUserID();
+    var pastOrders = []
+    db.collection("orders").where("user", "==", uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          // console.log(doc.id, " => ", doc.data());
+          pastOrders.push({'orderId': doc.id, 'data': doc.data})
+        });
+        // console.log(pastOrders)
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
+    return pastOrders;  
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
@@ -56,7 +80,9 @@ export default function AuthProvider({ children }){
     logout,
     resetPassword,
     updateEmail,
-    updatePassword 
+    updatePassword,
+    getUserID,
+    getPastOrders 
   }
 
   return (

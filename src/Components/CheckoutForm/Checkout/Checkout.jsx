@@ -37,6 +37,8 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
         }
     },[cart]);
 
+    console.log(checkoutToken)
+
     const next = (data) => {
         setShippingData(data);
     

@@ -3,10 +3,22 @@ import { Typography, Button, Divider } from '@material-ui/core';
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Review from './Review';
+import { useAuth } from '../../contexts/AuthContext';
+import app from '../../library/firebase';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout, timeout} ) => {
+    const {getUserID} = useAuth();
+    const db = app.firestore();
+
+    const products = []
+    checkoutToken.live.line_items.map((product) => (
+        products.push(product.name)
+    ))
+    
+    // console.log("products:", products);
+
     const handleSubmit = async (event, elements, stripe) => {
         event.preventDefault();
 
@@ -41,7 +53,22 @@ const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptur
                     },
                 },
             };
-        
+            
+            // add to the database
+            const uid = getUserID();
+            db.collection('orders').add({
+                    'amount': checkoutToken.live.subtotal.formatted_with_symbol,
+                    'user': uid,
+                    'products': products,
+                    'timestamp': {'date': new Date().toLocaleDateString()} 
+                })
+                .then((docRef) => {
+                    console.log("Document written with ID: ", docRef.id);
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+
             onCaptureCheckout(checkoutToken.id, orderData);
 
             timeout();
