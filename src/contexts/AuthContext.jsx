@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useContext, useEffect } from 'react';
 import { auth } from "../library/firebase";
-import app from '../library/firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, updatePassword, onAuthStateChanged } from '@firebase/auth';
 const AuthContext = React.createContext();
 
 export function useAuth()
@@ -11,64 +11,44 @@ export function useAuth()
 
 // function that uses auth to connect to firebase
 export default function AuthProvider({ children }){
-  
+  // const auth = getAuth();
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
   function signup(email, password) {
     // console.log(email + " " + password);
-    return auth.createUserWithEmailAndPassword(email, password);
+    return createUserWithEmailAndPassword(auth, email, password);
   }
   
   function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password);
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
   function logout() {
-    return auth.signOut();
+    return signOut(auth);
   }
 
   function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email);
+    return sendPasswordResetEmail(auth, email);
   }
 
-  function updateEmail(email) {
-    return auth.currentUser.updateEmail(email);
+  function updateEmailFunction(email) {
+    return updateEmail(auth.currentUser, email);
   }
-  function updatePassword(password) {
-    return auth.currentUser.updatePassword(password);
+  function updatePasswordFunction(password) {
+    return updatePassword(auth.currentUser, password);
   }
 
   function getUserID() {
     return auth.currentUser.uid;
   }
 
-  function getPastOrders(){
-    const db = app.firestore();
-    const uid = getUserID();
-    var pastOrders = []
-    db.collection("orders").where("user", "==", uid)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          // console.log(doc.id, " => ", doc.data());
-          pastOrders.push({'orderId': doc.id, 'data': doc.data})
-        });
-        // console.log(pastOrders)
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-      });
-    return pastOrders;  
-  }
-
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
     });
-
+    
     return unsubscribe;
   }, []);
 
@@ -79,10 +59,9 @@ export default function AuthProvider({ children }){
     login,
     logout,
     resetPassword,
-    updateEmail,
-    updatePassword,
-    getUserID,
-    getPastOrders 
+    updateEmailFunction,
+    updatePasswordFunction,
+    getUserID
   }
 
   return (

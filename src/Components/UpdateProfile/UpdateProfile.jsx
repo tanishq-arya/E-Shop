@@ -9,7 +9,7 @@ export default function UpdateProfile(){
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { updateEmail, updatePassword, currentUser, logout } = useAuth();
+  const { updateEmailFunction, updatePasswordFunction, currentUser, logout } = useAuth();
   const [error,setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -27,11 +27,11 @@ export default function UpdateProfile(){
     setError("");
 
     if(emailRef.current.value !== currentUser.email) {
-      promises.push(updateEmail(emailRef.current.value))
+      promises.push(updateEmailFunction(emailRef.current.value))
     }
 
     if(passwordRef.current.value){
-      promises.push(updatePassword(passwordRef.current.value))
+      promises.push(updatePasswordFunction(passwordRef.current.value))
     }
 
     Promise.all(promises).then(() => {
@@ -90,6 +90,7 @@ export default function UpdateProfile(){
       
       <div className="w-100 text-center mt-2">
         <Button variant="link" onClick={handleLogout}>Log Out</Button>
+        <Button variant="link" href="/past-orders">Past Orders</Button>
       </div>
     </>
   )

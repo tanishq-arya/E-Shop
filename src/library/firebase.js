@@ -1,7 +1,10 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
+// import firebase from "firebase/app";
+// import "firebase/auth";
+// import "firebase/firestore";
+// import "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from '@firebase/firestore';
+import { getAuth } from 'firebase/auth'
 
 // const app = firebase.initializeApp({
 //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,7 +16,23 @@ import "firebase/storage";
 //   appId: process.env.REACT_APP_FIREBASE_APP_ID
 // });
 
-const app = firebase.initializeApp({
+// const app = firebase.initializeApp({
+//   apiKey: "AIzaSyBfhq694Kix0Yrw0JY5hOYoVeBAONsqT64",
+//   authDomain: "eshop-dev-504cd.firebaseapp.com",
+//   databaseURL: "https://eshop-dev-504cd-default-rtdb.firebaseio.com",
+//   projectId: "eshop-dev-504cd",
+//   storageBucket: "eshop-dev-504cd.appspot.com",
+//   messagingSenderId: "446561542582",
+//   appId: "1:446561542582:web:11f21bb95aba1ece9f6117"
+// });
+
+// export const auth = app.auth();
+// export const db = app.firestore();
+// export const storage = app.storage();
+
+// export default app;
+
+const firebaseConfig = {
   apiKey: "AIzaSyBfhq694Kix0Yrw0JY5hOYoVeBAONsqT64",
   authDomain: "eshop-dev-504cd.firebaseapp.com",
   databaseURL: "https://eshop-dev-504cd-default-rtdb.firebaseio.com",
@@ -21,10 +40,12 @@ const app = firebase.initializeApp({
   storageBucket: "eshop-dev-504cd.appspot.com",
   messagingSenderId: "446561542582",
   appId: "1:446561542582:web:11f21bb95aba1ece9f6117"
-});
+};
 
-export const auth = app.auth();
-// export const db = app.firestore();
-export const storage = app.storage();
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+
+export const database = getFirestore(app);
 
 export default app;
