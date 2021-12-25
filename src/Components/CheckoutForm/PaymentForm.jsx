@@ -3,10 +3,23 @@ import { Typography, Button, Divider } from '@material-ui/core';
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Review from './Review';
+import { useAuth } from '../../contexts/AuthContext';
+import { database } from '../../library/firebase';
+import { addDoc, collection } from '@firebase/firestore';
+
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout, timeout} ) => {
+    const {getUserID} = useAuth();
+    
+    const products = []
+    checkoutToken.live.line_items.map((product) => (
+        products.push({name: product.name, amount: product.line_total.formatted_with_symbol, quantity: product.quantity})
+    ))
+    
+    // console.log("products:", products);
+
     const handleSubmit = async (event, elements, stripe) => {
         event.preventDefault();
 
@@ -41,7 +54,22 @@ const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptur
                     },
                 },
             };
-        
+            
+
+            // add to the database
+            const uid = getUserID();
+            addDoc(collection(database, "orders-data"), {
+                    total: checkoutToken.live.subtotal.formatted_with_symbol,
+                    user: uid,
+                    products: products, 
+                })
+                .then((docRef) => {
+                    // console.log("Document written with ID: ", docRef.id);
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+
             onCaptureCheckout(checkoutToken.id, orderData);
 
             timeout();
