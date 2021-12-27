@@ -9,7 +9,7 @@ import { commerce } from '../../../library/commerce'
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
+const Checkout = ({ refreshCart, cart, order, onCaptureCheckout, error }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState(null);
     const classes = useStyles();
@@ -61,7 +61,10 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
                 <Typography variant="subtitle2">Order ref: {order.customer_reference} </Typography>
             </div>
             <br/>
-            <Button component={Link} to="/" variant="outlined" type="button">Back to Home</Button>
+            <div style = {{ display: 'flex', justifyContent: 'space-between'}}>
+                <Button component={Link} to="/" variant="outlined" onClick={refreshCart} type="button">Back to Home</Button>
+                <Button component={Link} to="/past-orders" variant="outlined" onClick={refreshCart} type="button">Past Orders</Button>
+            </div>
         </>
     ) : isFinished ? (
         <>
@@ -70,7 +73,10 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
                 <Divider className={classes.divider} />
             </div>
             <br/>
-            <Button component={Link} to="/" variant="outlined" type="button">Back to Home</Button>
+            <div style = {{ display: 'flex', justifyContent: 'space-between'}}>
+                <Button component={Link} to="/" variant="outlined" onClick={refreshCart} type="button">Back to Home</Button>
+                <Button component={Link} to="/past-orders" variant="outlined" onClick={refreshCart} type="button">Past Orders</Button>
+            </div>
         </>
     ) : (
         <div className={classes.spinner}>
@@ -80,9 +86,11 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 
     if(error){
         <>
-        <Typography variant="h5">Error: {error}</Typography>
-        <br/>
-        <Button component={Link} to="/" variant="outlined" type="button">Back to Home</Button>
+            <div style = {{ display: 'flex', justifyContent: 'space-between'}}>
+                <Typography variant="h5">Error: {error}</Typography>
+                <Button component={Link} to="/" variant="outlined" onClick={refreshCart} type="button">Back to Home</Button>
+                <Button component={Link} to="/past-orders" variant="outlined" onClick={refreshCart} type="button">Past Orders</Button>
+            </div>
         </>
     }
     
