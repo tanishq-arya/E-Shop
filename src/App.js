@@ -102,7 +102,7 @@ const App = () => {
                 <Cart cart={cart} handleUpdateCartQty={handleUpdateCartQty} handleRemoveFromCart={handleRemoveFromCart} onEmptyCart={handleEmptyCart} />
               </Route>
               <Route exact path="/checkout">
-                <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
+                <Checkout refreshCart={refreshCart} cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
               </Route>
               <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh"}}>
               <div className="w-100" style={{position: "realtive", maxWidth:"400px"}}>  

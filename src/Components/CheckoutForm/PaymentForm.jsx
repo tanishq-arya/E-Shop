@@ -7,7 +7,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { database } from '../../library/firebase';
 import { addDoc, collection } from '@firebase/firestore';
 
-
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout, timeout} ) => {
@@ -75,6 +74,7 @@ const PaymentForm = ( {checkoutToken, nextStep, backStep, shippingData, onCaptur
             timeout();
         
             nextStep();
+            
         }
     };
 

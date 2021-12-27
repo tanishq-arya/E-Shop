@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Button, IconButton, Typography,Badge } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography,Badge, Tooltip } from '@material-ui/core';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, AccountCircle } from '@material-ui/icons';
 import useStyles from './styles';
@@ -25,19 +25,19 @@ const location = useLocation();
                     <div className={classes.grow} />
                     {location.pathname === '/' && (
                     <div className={classes.button}>
-                        <Button
-                            style={{fontFamily:"Roboto",fontSize:"1rem" }}
-                            endIcon={<AccountCircle/>}
-                            href="/update-profile"
-                        >
-                            Account
-                        </Button>
                         {/* <Link to = "/cart">Go to cart</Link> */}
-                        <IconButton component = {Link} to = "/cart" aria-label="Show Cart Items" color='inherit'>
-                            <Badge badgeContent= {totalItems} color="secondary">
-                            <ShoppingCart />
-                            </Badge>
-                        </IconButton>
+                        <Tooltip title="Account Details">
+                            <IconButton component = {Link} to = "/update-profile" aria-label="Account Details" color='inherit'>
+                                <AccountCircle />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Cart">
+                            <IconButton component = {Link} to = "/cart" aria-label="Show Cart Items" color='inherit'>
+                                <Badge badgeContent= {totalItems} color="secondary">
+                                <ShoppingCart />
+                                </Badge>
+                            </IconButton>
+                        </Tooltip>
                     </div>)}
                 </Toolbar>
             </AppBar>
